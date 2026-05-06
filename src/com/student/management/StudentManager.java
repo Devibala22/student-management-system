@@ -43,13 +43,21 @@ public class StudentManager {
 
     // SEARCH BY NAME
     public String searchByName(String name) {
+
         StringBuilder sb = new StringBuilder();
+
         for (Student s : map.values()) {
+
             if (s.name.equalsIgnoreCase(name)) {
                 sb.append(s).append("\n");
             }
         }
-        return sb.length() == 0 ? "No student found" : sb.toString();
+
+        if (sb.length() == 0) {
+            return "No student found";
+        }
+
+        return sb.toString();
     }
 
     // DELETE
