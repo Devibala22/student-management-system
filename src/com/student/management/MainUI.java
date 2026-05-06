@@ -20,9 +20,9 @@ public class MainUI extends Frame implements ActionListener {
         setSize(800, 550);
         setLayout(new BorderLayout(10, 10));
 
-        // =========================
+
         // TOP INPUT PANEL
-        // =========================
+
         Panel top = new Panel(new GridLayout(3, 2, 10, 10));
 
         top.add(new Label("ID:"));
@@ -39,9 +39,8 @@ public class MainUI extends Frame implements ActionListener {
 
         add(top, BorderLayout.NORTH);
 
-        // =========================
         // OUTPUT AREA
-        // =========================
+
         output = new TextArea();
 
         output.setFont(new Font("Monospaced", Font.BOLD, 14));
@@ -50,9 +49,9 @@ public class MainUI extends Frame implements ActionListener {
 
         add(output, BorderLayout.CENTER);
 
-        // =========================
+
         // BUTTON PANEL
-        // =========================
+
         Panel bottom = new Panel(new GridLayout(3, 4, 10, 10));
 
         addBtn = new Button("Add");
@@ -87,9 +86,9 @@ public class MainUI extends Frame implements ActionListener {
 
         add(bottom, BorderLayout.SOUTH);
 
-        // =========================
+
         // BUTTON EVENTS
-        // =========================
+
         Button[] buttons = {
                 addBtn, displayBtn, searchBtn, deleteBtn,
                 coursesBtn, orderBtn, sortBtn, exportBtn,
@@ -100,9 +99,9 @@ public class MainUI extends Frame implements ActionListener {
             b.addActionListener(this);
         }
 
-        // =========================
+
         // WINDOW CLOSE
-        // =========================
+
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 dispose();
@@ -112,9 +111,9 @@ public class MainUI extends Frame implements ActionListener {
         setVisible(true);
     }
 
-    // =========================================
+
     // ACTION EVENTS
-    // =========================================
+
     public void actionPerformed(ActionEvent e) {
 
         try {
@@ -248,9 +247,9 @@ public class MainUI extends Frame implements ActionListener {
         }
     }
 
-    // =========================================
+
     // CLEAR INPUT FIELDS
-    // =========================================
+
     public void clearFields() {
 
         idField.setText("");
@@ -258,9 +257,9 @@ public class MainUI extends Frame implements ActionListener {
         courseField.setText("");
     }
 
-    // =========================================
+
     // MAIN METHOD
-    // =========================================
+
     public static void main(String[] args) {
 
         new MainUI();
