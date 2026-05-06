@@ -5,55 +5,80 @@ import java.awt.event.*;
 
 public class MainUI extends Frame implements ActionListener {
 
+    // Input fields
     TextField idField, nameField, courseField;
+
+    // Output area
     TextArea output;
 
+    // Buttons
     Button addBtn, displayBtn, searchBtn, deleteBtn,
             coursesBtn, orderBtn, sortBtn, exportBtn,
             undoBtn, searchNameBtn, statsBtn, openFileBtn;
 
+    // Student manager object
     StudentManager sm = new StudentManager();
 
     public MainUI() {
 
+        // Frame title
         setTitle("Student Management System");
+
+        // Frame size
         setSize(800, 550);
+
+        // Main layout
         setLayout(new BorderLayout(10, 10));
 
 
-        // TOP INPUT PANEL
+
+        // Top input panel
 
         Panel top = new Panel(new GridLayout(3, 2, 10, 10));
 
+        // ID field
         top.add(new Label("ID:"));
         idField = new TextField();
         top.add(idField);
 
+        // Name field
         top.add(new Label("Name:"));
         nameField = new TextField();
         top.add(nameField);
 
+        // Course field
         top.add(new Label("Course:"));
         courseField = new TextField();
         top.add(courseField);
 
+        // Add top panel to frame
         add(top, BorderLayout.NORTH);
 
-        // OUTPUT AREA
+
+
+        // Output area
 
         output = new TextArea();
 
+        // Output text style
         output.setFont(new Font("Monospaced", Font.BOLD, 14));
+
+        // Background color
         output.setBackground(Color.BLACK);
+
+        // Text color
         output.setForeground(Color.GREEN);
 
+        // Add output area
         add(output, BorderLayout.CENTER);
 
 
-        // BUTTON PANEL
+
+        // Bottom button panel
 
         Panel bottom = new Panel(new GridLayout(3, 4, 10, 10));
 
+        // Create buttons
         addBtn = new Button("Add");
         displayBtn = new Button("Display");
         searchBtn = new Button("Search ID");
@@ -69,6 +94,7 @@ public class MainUI extends Frame implements ActionListener {
         statsBtn = new Button("Stats");
         openFileBtn = new Button("Open File");
 
+        // Add buttons to panel
         bottom.add(addBtn);
         bottom.add(displayBtn);
         bottom.add(searchBtn);
@@ -84,10 +110,12 @@ public class MainUI extends Frame implements ActionListener {
         bottom.add(statsBtn);
         bottom.add(openFileBtn);
 
+        // Add bottom panel
         add(bottom, BorderLayout.SOUTH);
 
 
-        // BUTTON EVENTS
+
+        // Add action listeners to buttons
 
         Button[] buttons = {
                 addBtn, displayBtn, searchBtn, deleteBtn,
@@ -96,31 +124,40 @@ public class MainUI extends Frame implements ActionListener {
         };
 
         for (Button b : buttons) {
+
+            // Register button click event
             b.addActionListener(this);
         }
 
 
-        // WINDOW CLOSE
+
+        // Close window event
 
         addWindowListener(new WindowAdapter() {
+
             public void windowClosing(WindowEvent e) {
+
+                // Close frame
                 dispose();
             }
         });
 
+        // Make frame visible
         setVisible(true);
     }
 
 
-    // ACTION EVENTS
+
+    // Button click actions
 
     public void actionPerformed(ActionEvent e) {
 
         try {
 
-            // ================= ADD =================
+            // Add student
             if (e.getSource() == addBtn) {
 
+                // Check empty fields
                 if (idField.getText().trim().isEmpty() ||
                         nameField.getText().trim().isEmpty() ||
                         courseField.getText().trim().isEmpty()) {
@@ -129,72 +166,82 @@ public class MainUI extends Frame implements ActionListener {
                     return;
                 }
 
+                // Convert ID to integer
                 int id = Integer.parseInt(idField.getText());
 
+                // Create student object
                 Student s = new Student(
                         id,
                         nameField.getText(),
                         courseField.getText()
                 );
 
+                // Add student
                 sm.addStudent(s);
 
                 output.setText("Student Added Successfully!");
 
+                // Clear fields
                 clearFields();
             }
 
-            // ================= DISPLAY =================
+            // Display all students
             else if (e.getSource() == displayBtn) {
 
                 output.setText(sm.display());
             }
 
-            // ================= SEARCH ID =================
+            // Search using ID
             else if (e.getSource() == searchBtn) {
 
+                // Check ID empty
                 if (idField.getText().trim().isEmpty()) {
+
                     output.setText("Enter ID!");
                     return;
                 }
 
                 int id = Integer.parseInt(idField.getText());
 
+                // Search student
                 output.setText(sm.search(id));
             }
 
-            // ================= DELETE =================
+            // Delete student
             else if (e.getSource() == deleteBtn) {
 
+                // Check ID empty
                 if (idField.getText().trim().isEmpty()) {
+
                     output.setText("Enter ID!");
                     return;
                 }
 
                 int id = Integer.parseInt(idField.getText());
 
+                // Delete student
                 output.setText(sm.delete(id));
             }
 
-            // ================= COURSES =================
+            // Show unique courses
             else if (e.getSource() == coursesBtn) {
 
                 output.setText(sm.showCourses());
             }
 
-            // ================= INSERTION ORDER =================
+            // Show insertion order
             else if (e.getSource() == orderBtn) {
 
                 output.setText(sm.showOrder());
             }
 
-            // ================= SORT =================
+            // Sort students by name
             else if (e.getSource() == sortBtn) {
 
                 output.setText(sm.sortByName());
             }
 
-            // ================= EXPORT =================
+            // Export data to text file
             else if (e.getSource() == exportBtn) {
 
                 sm.exportToFile();
@@ -202,18 +249,20 @@ public class MainUI extends Frame implements ActionListener {
                 output.setText("Exported to students.txt");
             }
 
-            // ================= UNDO DELETE =================
+            // Undo delete
             else if (e.getSource() == undoBtn) {
 
                 output.setText(sm.undoDelete());
             }
 
-            // ================= SEARCH NAME =================
+            // Search student by name
             else if (e.getSource() == searchNameBtn) {
 
                 String name = nameField.getText();
 
+                // Check name empty
                 if (name.trim().isEmpty()) {
+
                     output.setText("Enter Name!");
                     return;
                 }
@@ -221,13 +270,13 @@ public class MainUI extends Frame implements ActionListener {
                 output.setText(sm.searchByName(name));
             }
 
-            // ================= STATS =================
+            // Show course statistics
             else if (e.getSource() == statsBtn) {
 
                 output.setText(sm.courseStats());
             }
 
-            // ================= OPEN FILE =================
+            // Open exported file
             else if (e.getSource() == openFileBtn) {
 
                 output.setText(sm.openFile());
@@ -235,12 +284,13 @@ public class MainUI extends Frame implements ActionListener {
 
         }
 
+        // Invalid number input
         catch (NumberFormatException ex) {
 
             output.setText("ID must be a number!");
-
         }
 
+        // Other errors
         catch (Exception ex) {
 
             output.setText("Error: " + ex.getMessage());
@@ -248,7 +298,8 @@ public class MainUI extends Frame implements ActionListener {
     }
 
 
-    // CLEAR INPUT FIELDS
+
+    // Clear text fields
 
     public void clearFields() {
 
@@ -258,7 +309,8 @@ public class MainUI extends Frame implements ActionListener {
     }
 
 
-    // MAIN METHOD
+
+    // Program starting point
 
     public static void main(String[] args) {
 
